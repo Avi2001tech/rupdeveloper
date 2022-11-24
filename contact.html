@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  list-style: none;
+  text-decoration: none;
+}
+:root {
+  --animation-curve: cubic-bezier(1, 0, 0, 1);
+}
+
+html {
+  font-size: 62.5%;
+  scroll-behavior: smooth;
+}
+
+body {
+  line-height: 1;
+  font-weight: 400;
+  overflow-x: hidden;
+  /*background-color: #171717;*/
+  background: no-repeat center center fixed;
+  background-size: cover;
+  background-image: url("https://us.123rf.com/450wm/arogant/arogant0901/arogant090100005/4086132-blue-flame-magic-font-over-black-background-letter-b.jpg?ver=6"),
+    linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75));
+  background-blend-mode: overlay; 
+}
+
+/******************************************* ** */
+/*************UTILS***********/
+/******************************************* ** */
+.hidden {
+  display: none;
+}
+/******************************************* ** */
+/************* REUSABLE COMPONENTS ***********/
+/******************************************* ** */
+.burger {
+  cursor: pointer;
+  margin-right: 1rem;
+}
+.fa-bars {
+  color: white;
+  font-size: 2.4vw;
+  margin-right: 1vw;
+}
+.fa-times {
+  color: red;
+  font-size: 2.4vw;
+  margin-right: 1vw;
+}
+.burger div {
+  width: 2vw;
+  height: 0.2vw;
+  background-color: #fff;
+  margin: 7px;
+  border-radius: 0.2vw;
+}
+.line1.toggle {
+  transform: rotate(45deg);
+  transform-origin: left top;
+  background-color: red;
+  transition: all 0.4s;
+}
+.line2.toggle {
+  opacity: 0;
+}
+.line3.toggle {
+  transform: rotate(-45deg);
+  transform-origin: left bottom;
+  background-color: red;
+  transition: all 0.4s;
+}
+.btn {
+  font-size: 0.9vw;
+  font-weight: 700;
+  border: transparent;
+  color: #fff;
+  background-color: #ff0000;
+  font-family: "Nunito Sans";
+  letter-spacing: 0.3vw;
+  line-height: 1.05;
+  text-transform: uppercase;
+  padding: 1vw 2vw;
+  border-radius: 0.6vw;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.btn:hover {
+  background-color: #ce0101;
+}
+.btn-primary {
+  font-size: 1.4vw;
+  padding: 1.6vw 5vw;
+}
+.heading-primary {
+  font-size: 3vw;
+  font-family: "Ubuntu", sans-serif;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.3vw;
+  line-height: 1.1;
+  /* border: solid 1px red; */
+}
+
+section {
+  margin-bottom: 1vw;
+}
+/******************************************* ** */
+/************* ANIMATIONS ***********/
+/******************************************* ** */
+@keyframes navLinkFade {
+  from {
+    opacity: 0;
+    transform: translateX(5rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0rem);
+  }
+}
+
+/******************************************* ** */
+/************* HERO SECTION ***********/
+/******************************************* ** */
+
+.section-hero {
+  width: 100vw;
+  height: 100vh;
+  margin: auto;
+  /* border: solid 1px red; */
+  background: url("bg-imgs/bg1.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+
+header {
+  width: 100vw;
+  height: 8.4vh;
+  position: fixed;
+  background-color: transparent;
+  z-index: 10;
+}
+.header-active {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+nav {
+  margin: 0 auto;
+  padding: 2.4rem 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.main-nav-list {
+  position: absolute;
+  right: 0px;
+  height: calc(100vh - 8.4vh);
+  top: 8.4vh;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* justify-content: center; */
+  width: 25%;
+  transform: translateX(100%);
+  transition: transform 0.3s ease-in-out;
+}
+
+.main-nav-link:visited,
+.main-nav-link:link {
+  display: inline-block;
+  color: #fff;
+  font-size: 1.8vw;
+  font-family: "Ubuntu", sans-serif;
+  text-transform: uppercase;
+  font-weight: 500;
+  letter-spacing: 4px;
+  margin: 1.6vw;
+  line-height: 1.1;
+  padding: 0.7rem 1.4rem;
+  border: solid 2px transparent;
+  border-radius: 0.6rem;
+  transition: all 0.3s;
+}
+.nav-active {
+  transform: translateX(0%);
+}
+
+.main-nav-link:hover,
+.main-nav-link:active {
+  color: #00ffff;
+}
+
+.hero-content {
+  width: 100vw;
+  /* height: 92vh; */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 100%;
+}
+.text-content {
+  /* border: solid 1px red; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  text-transform: uppercase;
+  padding: 2vw 6.2vw;
+  line-height: 1.1;
+}
+.text-content h1 {
+  font-family: "Ubuntu", sans-serif;
+}
+.text-content h1:nth-child(1) {
+  font-family: "Nunito Sans";
+  font-size: 2.8vw;
+  font-weight: 500;
+  letter-spacing: 0.3vw;
+  color: #fff;
+}
+.text-content h1:nth-child(2) {
+  font-size: 3.6vw;
+
+  font-weight: 700;
+  color: #fff;
+}
+.text-content h1:nth-child(3) {
+  font-size: 3.2vw;
+  font-weight: 700;
+  color: #00ffff;
+  margin-bottom: 1vw;
+}
+
+.userpic {
+  /* border: solid 1px red; */
+  display: flex;
+
+  justify-content: flex-start;
+  align-items: center;
+  padding: 2vw 6.2vw;
+}
+
+.userpic-img {
+  height: 24vw;
+  width: 24vw;
+  /* border: solid 1px red; */
+  /* border: solid 0.4vw #00ffff; */
+  position: relative;
+}
+.userpic-img img {
+  height: 90%;
+  position: absolute;
+  z-index: 2;
+}
+.userpic-img .shifted-border {
+  height: 90%;
+  width: 90%;
+  position: absolute;
+  border: solid 0.36vw #00ffff;
+  top: 1.8vw;
+  left: 1.8vw;
+}
+
+/******************************************* ** */
+/************* ABOUT SECTION ***********/
+/******************************************* ** */
+
+.section-about {
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2vw;
+  padding: 2vw 20vw;
+}
+
+.section-about p {
+  color: #00ffff;
+  font-size: 1.4vw;
+  line-height: 1.4;
+  text-align: justify;
+  font-family: "Open Sans";
+  letter-spacing: 0.2vw;
+  margin-bottom: 3vw;
+  padding: 1vw;
+  /* border: solid 1px red; */
+}
+
+.skill--cv {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
+  /* border: solid 1px red; */
+}
+.skills {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.skills h1 {
+  font-size: 2.2vw;
+  font-family: "Open Sans";
+  letter-spacing: 0.7vw;
+  line-height: 1.2;
+  color: #fff;
+  text-transform: capitalize;
+  margin-bottom: 1.6vw;
+  font-weight: 700;
+}
+
+.skills ul {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 1.6vw;
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.2vw;
+  line-height: 1.2;
+  gap: 0.3vw;
+}
+
+.cv {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 2vw;
+}
+
+/******************************************* ** */
+/************* WORKS SECTION ***********/
+/******************************************* ** */
+.section-works {
+  width: 100vw;
+  /* background-color: #171717; */
+  /* border: solid 1px red; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2vw;
+  padding: 2vw 8vw;
+}
+.works {
+  display: grid;
+  grid-template-columns: auto auto;
+  width: 100%;
+  /* min-height: 80vh; */
+  /* border: solid 1px red; */
+  gap: 4vw;
+  padding: 1vw 3vw;
+}
+.work {
+  /* border: solid 1px red; */
+  position: relative;
+  width: 100%;
+  height: 18vw;
+}
+.work img {
+  object-fit: cover;
+  width: 30vw;
+  height: 16vw;
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 0;
+}
+.work .shifted-border {
+  width: 30vw;
+  height: 16vw;
+  position: absolute;
+  border: solid 0.36vw #00ffff;
+  top: 1.8vw;
+  left: 1.8vw;
+}
+.work button {
+  cursor: pointer;
+}
+/* .work button:hover {
+  transform: scale(1.05);
+} */
+
+.img-overlay {
+  object-fit: cover;
+  width: 30vw;
+  height: 16vw;
+  position: absolute;
+  z-index: 4;
+  top: 0;
+  left: 0;
+
+  background-color: rgba(0, 0, 0, 0.3);
+  color: white;
+  display: flex;
+  justify-content: flex-end;
+  padding: 1.2vw;
+  font-size: 6vw;
+  font-family: "Ubuntu";
+  font-weight: 700;
+}
+.img-overlay:hover {
+  background-color: rgba(255, 255, 255, 0);
+  color: rgba(255, 255, 255, 0);
+  transition: all 0.3s ease-in-out;
+}
+
+/******************************************* ** */
+/************* CONTACT SECTION ***********/
+/******************************************* ** */
+
+.section-contact {
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2vw;
+  padding: 2vw 20vw;
+}
+.input-field {
+  font-family: "Nunito Sans";
+  margin-bottom: 2.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+label {
+  display: block;
+  color: white;
+  font-size: 1.8rem;
+
+  font-weight: 600;
+  letter-spacing: 3px;
+  margin-bottom: 0.6rem;
+}
+input {
+  width: 35vw;
+  height: 3vw;
+  padding: 1rem;
+  font-size: 0.85vw;
+  background-color: rgba(0, 0, 0, 0.7);
+  border: solid 2px #ffffff;
+  border-radius: 0.3vw;
+  font-family: "Rubik";
+  font-weight: 400;
+  letter-spacing: 4px;
+  color: #ffffffb3;
+}
+
+textarea {
+  resize: none;
+  width: 35vw;
+  height: 14vw;
+  background-color: rgba(0, 0, 0, 0.7);
+  border: solid 2px #ffffff;
+  border-radius: 0.3vw;
+  padding: 1rem;
+  font-size: 0.85vw;
+  font-family: "Rubik";
+  letter-spacing: 4px;
+  color: white;
+}
+::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: white;
+  opacity: 0.7;
+  font-size: 0.85vw;
+  font-family: "Rubik";
+  /* Firefox */
+}
+
+/******************************************* ** */
+/************* FOOTER ***********/
+/******************************************* ** */
+
+footer {
+  width: 100vw;
+  background-color: #171717;
+}
+.footer-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1.2vw;
+  padding: 1.6vw 3.6vw;
+}
+.footer-content p {
+  color: #ffffff;
+  font-family: "Poppins";
+  font-size: 1.4vw;
+  font-weight: 500;
+  letter-spacing: 3px;
+}
+.logo img {
+  height: 8rem;
+}
+.footer-list ul {
+  list-style: none;
+  display: flex;
+  gap: 2vw;
+  justify-content: center;
+  align-items: center;
+}
+.footer-list ul li a:visited,
+.footer-list ul li a:link {
+  font-family: "Nunito Sans";
+  color: #979797;
+  font-size: 1.2vw;
+  letter-spacing: 0.2vw;
+  font-weight: bold;
+}
+.footer-list ul li a:hover,
+.footer-list ul li a:active {
+  color: #fff;
+}
+.footer-content p:last-child {
+  font-size: 1vw;
+  text-align: center;
+  font-weight: 400;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  list-style: none;
+  text-decoration: none;
+}
+
+html {
+  font-size: 62.5%;
+  scroll-behavior: smooth;
+}
+
+@media screen and (max-width: 544px) {
+  /******************************************* ** */
+  /************* REUSABLE COMPONENTS ***********/
+  /******************************************* ** */
+  .burger {
+    margin-right: 0rem;
+  }
+  .fa-bars {
+    font-size: 4vh;
+    margin-right: 0.5vw;
+  }
+  .fa-times {
+    font-size: 4vh;
+    margin-right: 0.5vw;
+  }
+
+  .btn {
+    font-size: 4vw;
+    letter-spacing: 0.7vw;
+    padding: 2.4vw 4.8vw;
+    border-radius: 1.6vw;
+  }
+  .btn:hover {
+    background-color: #ce0101;
+  }
+  .btn-primary {
+    width: 100%;
+    height: 100%;
+    font-size: 6vw;
+    padding: 4.2vw 7vw;
+  }
+  .heading-primary {
+    font-size: 7.2vw;
+    letter-spacing: 0.7vw;
+    line-height: 1.4;
+    /* border: solid 1px red; */
+    margin-bottom: 2vh;
+  }
+
+  section {
+    margin-bottom: 1vw;
+  }
+
+  /******************************************* ** */
+  /************* HERO SECTION ***********/
+  /******************************************* ** */
+
+  header {
+    height: 7vh;
+  }
+
+  nav {
+    padding: 1.5vh;
+  }
+
+  .main-nav-list {
+    height: calc(100vh - 7vh);
+    top: 6.95vh;
+    width: 50%;
+  }
+
+  .main-nav-link:visited,
+  .main-nav-link:link {
+    font-size: 1.8vh;
+    letter-spacing: 3px;
+    margin: 3.2vh;
+    padding: 0.7vh 1.4vh;
+  }
+  .hero-content {
+    grid-template-columns: 1fr;
+  }
+  .text-content {
+    /* border: solid 1px red; */
+    justify-content: flex-start;
+    padding: 3vh 6vh;
+    align-items: flex-start;
+    line-height: 1.3;
+  }
+
+  .text-content h1:nth-child(1) {
+    font-size: 2.8vh;
+    letter-spacing: 0.6vw;
+  }
+  .text-content h1:nth-child(2) {
+    font-size: 3.6vh;
+    letter-spacing: 0.7vw;
+    text-align: justify;
+  }
+  .text-content h1:nth-child(3) {
+    font-size: 3.2vh;
+    letter-spacing: 0.5vw;
+    margin-bottom: 4vw;
+  }
+
+  .userpic {
+    /* border: solid 1px red; */
+    justify-content: center;
+    align-items: flex-end;
+    padding: 2vh 6.2vh;
+  }
+
+  .userpic-img {
+    height: 70vw;
+    width: 70vw;
+    object-fit: cover;
+    /* border: solid 1px red; */
+  }
+
+  .userpic-img .shifted-border {
+    border: solid 0.9vw #00ffff;
+    top: 3.6vw;
+    left: 3.6vw;
+  }
+
+  /******************************************* ** */
+  /************* ABOUT SECTION ***********/
+  /******************************************* ** */
+
+  .section-about {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2vh;
+    padding: 4vw 8vw;
+  }
+
+  .section-about p {
+    font-size: 3.6vw;
+    line-height: 1.4;
+    letter-spacing: 0.4vw;
+    margin-bottom: 5vw;
+    padding: 1vw;
+    /* border: solid 1px red; */
+  }
+
+  .skill--cv {
+    display: grid;
+    grid-template-columns: 1fr;
+    width: 100%;
+    /* border: solid 1px red; */
+  }
+  .skills {
+    align-items: flex-start;
+  }
+  .skills h1 {
+    font-size: 8.2vw;
+    letter-spacing: 0.7vw;
+    line-height: 1.2;
+    margin-bottom: 3.2vw;
+  }
+
+  .skills ul {
+    font-size: 4.8vw;
+    letter-spacing: 0.4vw;
+    gap: 0.7vw;
+    margin-bottom: 2.4vh;
+  }
+  .cv {
+    padding: 0vw;
+  }
+
+  /******************************************* ** */
+  /************* WORKS SECTION ***********/
+  /******************************************* ** */
+  .section-works {
+    gap: 4.2vw;
+    padding: 4vw 8vw;
+  }
+  .works {
+    grid-template-columns: 1fr;
+    width: 100%;
+    gap: 8vw;
+    padding: 1vw 0vw;
+  }
+  .work {
+    width: 100%;
+    height: 50vw;
+  }
+  .work img {
+    width: 95%;
+    height: 45vw;
+  }
+  .work .shifted-border {
+    width: 95%;
+    height: 45vw;
+    border: solid 0.9vw #00ffff;
+    top: 3.6vw;
+    left: 3.6vw;
+  }
+  .img-overlay {
+    width: 95%;
+    height: 45vw;
+    padding: 0 2.4vw;
+    font-size: 16vw;
+  }
+
+  /******************************************* ** */
+  /************* CONTACT SECTION ***********/
+  /******************************************* ** */
+
+  .section-contact {
+    min-height: 80vh;
+    gap: 4.2vw;
+    padding: 2vw 8vw;
+  }
+  .input-field {
+    margin-bottom: 6vw;
+
+    gap: 0.8vw;
+  }
+  label {
+    font-size: 5vw;
+    letter-spacing: 4px;
+    margin-bottom: 1.2vw;
+  }
+  input {
+    width: 88vw;
+    height: 11vw;
+    padding: 2vw;
+    font-size: 3.2vw;
+    color: #ffffffb3;
+    border-radius: 0.8vw;
+    letter-spacing: 2px;
+  }
+
+  textarea {
+    width: 88vw;
+    height: 50vw;
+    color: #ffffffb3;
+    border-radius: 0.8vw;
+    padding: 2vw;
+    font-size: 3.2vw;
+    letter-spacing: 2px;
+  }
+
+  ::placeholder {
+    font-size: 3.2vw;
+  }
+
+  /******************************************* ** */
+  /************* FOOTER ***********/
+  /******************************************* ** */
+
+  .footer-content {
+    gap: 2.4vw;
+    padding: 3.2vw 7vw;
+  }
+  .footer-content p {
+    font-size: 3.2vw;
+    letter-spacing: 2.5px;
+  }
+  .logo img {
+    height: 15vw;
+  }
+  .footer-list ul {
+    gap: 4vw;
+  }
+  .footer-list ul li a:visited,
+  .footer-list ul li a:link {
+    font-size: 3vw;
+    letter-spacing: 0.5vw;
+  }
+  .footer-content p:last-child {
+    font-size: 2vw;
+    text-align: center;
+    font-weight: 400;
+  }
+}
+
+    </style>
+</head>
+<body>
+    <section id="contact" class="section-contact">
+        <h1 class="heading-primary">CONTACT <span style="color: #00ffff;">ME</span></h1>
+        <form action="">
+            <div class="input-field">
+                <label for="name">Na<span style="color: #00ffff;">me</span></label>
+                <input type="text" placeholder="Write you name here...">
+            </div>
+            <div class="input-field">
+                <label for="email">Your <span style="color: #00ffff;">Email</span></label>
+                <input type="text" placeholder="Write you email here...">
+            </div>
+            <div class="input-field">
+                <label for="message">Your <span style="color: #00ffff;">Message</span></label>
+                <textarea name="message" id="" placeholder="What do you want to talk about?"></textarea>
+            </div>
+
+        </form>
+
+        <button class="btn">SEND</button>
+
+    </section>
+    
+</body>
+</html>
